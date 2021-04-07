@@ -9,7 +9,7 @@ end
 if ~isSameSeed
     prm.seed_p = [];    
 end
-snr=-15;%(-20:5:10);
+snr=(-20:5:10);
 snr_CS_list = [];
 snr_DT_list = [];
 bers = zeros(size(snr));
