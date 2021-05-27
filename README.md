@@ -3,3 +3,6 @@ This repository contains the code needed to reproduce results in the paper  by M
 
 ## Dataset Download
 The Training and Testing dataset to reproduce the paper results can be downloaded on [Genesys Website](https://genesys-lab.org/CS-5g-beyond). The web page also offer additional insights on the dataset created and the obtained performance.
+
+## How to run
+TODO
