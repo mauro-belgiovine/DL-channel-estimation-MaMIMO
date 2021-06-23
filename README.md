@@ -6,3 +6,5 @@ The Training and Testing dataset to reproduce the paper results can be downloade
 
 ## How to run
 TODO
+
+Please reach out to *belgiovine.m [AT] northeastern.edu* for any question. 
