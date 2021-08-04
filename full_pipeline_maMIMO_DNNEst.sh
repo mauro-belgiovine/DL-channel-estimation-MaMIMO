@@ -30,7 +30,7 @@ done
 # train data
 $PY create_massiveMIMO_CSIest_dnn_dataset.py -x $MAT_CODEDIR/packets/SNRanalysis/maMIMO_${TRAIN_Npkt}___1UsrTrain_BS32_SNR120.mat -o $PYDATASET_DIR/SNRanalysis/dataset${TRAIN_Npkt}_1Usr_BS32_SNR120_NOISELESS.b
 
-# TODO TESTED UNTIL HERE!! ALL GOOD
+mkdir -p $MODEL_DIR/BS32_denoise_${TRAIN_Npkt}_SNR120
 # 3) train
 echo "Start training the model.."
 $PY massiveMIMO_CSI_prediction_DNN.py --train -x $PYDATASET_DIR/SNRanalysis/dataset${TRAIN_Npkt}_1Usr_BS32_SNR120_NOISELESS.b --nn 1024 1024 -d $MODEL_DIR --bs 256 --epochs 1000 --method default_SNR --useGPU 0 --useBN --datasource matlab_maMimo
