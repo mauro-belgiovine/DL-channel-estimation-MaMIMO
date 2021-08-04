@@ -31,14 +31,10 @@ bfGain_DNN_SNR = zeros(length(snr),1);
 c = 0;
 
 for s=snr
-    %[bers_LS, evm_LS, bers_DNN, evm_DNN] = BER_test_maMIMO_LTF(strcat("packets/SNRanalysis/maMIMO_",num2str(nPkts),"_8dB___1Usr_BS32_SNR_sameseed",num2str(s),".mat"),nPkts,1.0,strcat("/home/mauro/Research/CSI_estimation/checkout_maMIMO_allBS/BS32_sameseed_SNR",num2str(s),"/test_csi_predictions_real.mat"),strcat("/home/mauro/Research/CSI_estimation/checkout_maMIMO_allBS/BS32_sameseed_SNR",num2str(s),"/test_csi_predictions_imag.mat"),true,true,s+10);
-    %[bers_LS, evm_LS, MSE_LS, bers_MMSE, evm_MMSE, MSE_MMSE, bers_DNN, evm_DNN, MSE_DNN] = BER_test_maMIMO_LTF(strcat("packets/SNRanalysis/maMIMO_",num2str(nPkts),"_8dB___1Usr_BS32_SNR",num2str(s),".mat"),nPkts,1.0,strcat("/home/mauro/Research/CSI_estimation/checkout_maMIMO_allBS/BS32_SNR",num2str(s),"/test_csi_predictions_real.mat"),strcat("/home/mauro/Research/CSI_estimation/checkout_maMIMO_allBS/BS32_SNR",num2str(s),"/test_csi_predictions_imag.mat"),false,false,s+10);
+    % uncomment the following line in case you wanna compute the metrics directly from this script
+    % [metrics] = BER_test_maMIMO_LTF(strcat(inputData_path,"/maMIMO_",num2str(nPkts),"___1UsrTest_BS",num2str(Nt),"_SNR",num2str(s),".mat"), nPkts, 1.0, strcat(testData_path,"/BS",num2str(Nt),"_SNR",num2str(s),"/test_csi_predictions_real.mat"), strcat(testData_path,"/BS",num2str(Nt),"_SNR",num2str(s),"/test_csi_predictions_imag.mat"),false,true,s);
     
-    %[metrics] = BER_test_maMIMO_LTF(strcat("packets/SNRanalysis/maMIMO_",num2str(nPkts),"___1Usr_BS32_SNR",num2str(s),".mat"),nPkts,1.0,strcat("/home/mauro/Research/maMIMO_deepCSIEst/CSI_estimation/checkout_maMIMO_allBS/test_denoiseBeta/BS32_SNR",num2str(s),"/test_csi_predictions_real.mat"),strcat("/home/mauro/Research/maMIMO_deepCSIEst/CSI_estimation/checkout_maMIMO_allBS/test_denoiseBeta/BS32_SNR",num2str(s),"/test_csi_predictions_imag.mat"),true,true,s);
-    %metrics = load(strcat("/home/mauro/Research/maMIMO_deepCSIEst/CSI_estimation/checkout_maMIMO_allBS/test_denoiseBeta/BS32_SNR",num2str(s),"/metrics2.mat"));
-    
-    [metrics] = BER_test_maMIMO_LTF(strcat(inputData_path,"/maMIMO_",num2str(nPkts),"___1UsrTest_BS",num2str(Nt),"_SNR",num2str(s),".mat"), nPkts, 1.0, strcat(testData_path,"/BS",num2str(Nt),"_SNR",num2str(s),"/test_csi_predictions_real.mat"), strcat(testData_path,"/BS",num2str(Nt),"_SNR",num2str(s),"/test_csi_predictions_imag.mat"),false,true,s);
-    % metrics = load(strcat(testData_path,"BS32_SNR",num2str(s),"/metrics4.mat"));
+    metrics = load(strcat(testData_path,"/BS",num2str(Nt),"_SNR",num2str(s),"/metrics.mat"));
     
     c = c + 1;
     bers_LS_SNR(c) = mean(metrics.bers_LS);
@@ -70,15 +66,13 @@ end
 figure;
 %f = figure('visible','off');
 semilogy(snr,bers_LS_SNR,'-o',snr,bers_MMSE_SNR,'-x',snr,bers_DNN_SNR,'-*');
-%semilogy(snr,bers_MMSE_SNR,'-x');
-%semilogy(snr,bers_DNN_SNR,'-*');
 xlabel('SNR (dB)');
 ylabel('Bit error rate (BER)');
 grid on;
-%saveas(f,strcat(testData_path,'BER'),'fig');
+saveas(f,strcat(testData_path,'BER'),'fig');
 
-figure;
-%f = figure('visible','off');
+%figure;
+f = figure('visible','off');
 hold on;
 plot(snr,evm_LS_SNR,'-o');
 plot(snr,evm_MMSE_SNR,'-x');
@@ -86,32 +80,28 @@ plot(snr,evm_DNN_SNR,'-*');
 xlabel('SNR (dB)');
 ylabel('EVM RMS (%)');
 hold off;
-%saveas(f,strcat(testData_path,'EVM'),'fig');
+saveas(f,strcat(testData_path,'EVM'),'fig');
 
-figure;
-%f = figure('visible','off');
+%figure;
+f = figure('visible','off');
 semilogy(snr,MSE_LS_SNR,'-o',snr,MSE_MMSE_SNR,'-x',snr,MSE_DNN_SNR,'-*');
-%plot(snr,MSE_MMSE_SNR,'-x');
-%plot(snr,MSE_DNN_SNR,'-*');
 xlabel('SNR (dB)');
 ylabel('MSE');
-%saveas(f,strcat(testData_path,'MSE'),'fig');
+saveas(f,strcat(testData_path,'MSE'),'fig');
 
-figure;
-%f = figure('visible','off)');
-hold on;
-plot(snr,pow2db(MSE_LS_SNR),'-o');
-plot(snr,pow2db(MSE_MMSE_SNR),'-x');
-plot(snr,pow2db(MSE_DNN_SNR),'-*');
-xlabel('SNR (dB)');
-ylabel('MSE');
-%saveas(f,strcat(testData_path,'MSE'),'fig');
+% figure;
+% %f = figure('visible','off)');
+% hold on;
+% plot(snr,pow2db(MSE_LS_SNR),'-o');
+% plot(snr,pow2db(MSE_MMSE_SNR),'-x');
+% plot(snr,pow2db(MSE_DNN_SNR),'-*');
+% xlabel('SNR (dB)');
+% ylabel('MSE');
+% saveas(f,strcat(testData_path,'MSE'),'fig');
 
 
-figure;
-%f = figure('visible','off');
-% vals = [bfGain_LS_SNR'; bfGain_MMSE_SNR'; bfGain_DNN_SNR'];
-% h = bar(snr,vals);
+%figure;
+f = figure('visible','off)');
 hold on;
 plot(snr,bfGain_LS_SNR,'-o');
 plot(snr,bfGain_MMSE_SNR,'-x');
@@ -119,7 +109,7 @@ plot(snr,bfGain_DNN_SNR,'-*');
 xlabel('SNR (dB)');
 ylabel('Beamforming gain (dB)');
 hold off;
-%saveas(f,strcat(testData_path,'BeamformGain'),'fig');
+saveas(f,strcat(testData_path,'BeamformGain'),'fig');
 
 
 
