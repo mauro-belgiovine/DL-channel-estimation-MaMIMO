@@ -60,4 +60,4 @@ bash full_pipeline_maMIMO_DNNEst.sh
 If you have already downloaded the [dataset](https://genesys-lab.org/CS-5g-beyond), you can skip the data generation portion and directly train the DNN models.
 
 ## Contacts
-Please reach out to *belgiovine.m [AT] northeastern.edu* for any question. 
+Please reach out to belgiovine.m@northeastern.edu for any question. 
