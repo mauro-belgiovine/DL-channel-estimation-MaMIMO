@@ -264,6 +264,9 @@ class DataGenerator(Sequence):
     def get_method(self):
         return self.method
 
+    def get_datasource(self):
+        return self.datasource
+
     def on_epoch_end(self):
         'Updates indexes after each epoch'
         self.indexes = np.arange(len(self.list_IDs))

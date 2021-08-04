@@ -1,16 +1,7 @@
-function snr_loop_testing(testData_path)
+function snr_loop_testing(inputData_path, testData_path, nPkts, snr, Nt)
 
-%snr=30; %snr=[28:2:40 45:5:60]; % sameseed
-%nPkts=30; 
-
-%snr=[28:2:40];
-%nPkts=300;
-
-%snr=[-22:1:-10];
-%snr=[-20:5:10];
-snr=[-22,-21,-20,-19,-18,-17,-16,-15,-14,-13,-12,-11,-10,-5,0,5,10];
-%snr=[-10];
-nPkts=500;
+% snr=[-22,-21,-20,-19,-18,-17,-16,-15,-14,-13,-12,-11,-10,-5,0,5,10];
+% nPkts=500;
 
 bers_LS_SNR = zeros(length(snr),1);
 bers_LS_SNR_CIs = cell(length(snr),1); % confindence intervals
@@ -39,8 +30,6 @@ bfGain_DNN_SNR = zeros(length(snr),1);
 
 c = 0;
 
-%testData_path = "";
-
 for s=snr
     %[bers_LS, evm_LS, bers_DNN, evm_DNN] = BER_test_maMIMO_LTF(strcat("packets/SNRanalysis/maMIMO_",num2str(nPkts),"_8dB___1Usr_BS32_SNR_sameseed",num2str(s),".mat"),nPkts,1.0,strcat("/home/mauro/Research/CSI_estimation/checkout_maMIMO_allBS/BS32_sameseed_SNR",num2str(s),"/test_csi_predictions_real.mat"),strcat("/home/mauro/Research/CSI_estimation/checkout_maMIMO_allBS/BS32_sameseed_SNR",num2str(s),"/test_csi_predictions_imag.mat"),true,true,s+10);
     %[bers_LS, evm_LS, MSE_LS, bers_MMSE, evm_MMSE, MSE_MMSE, bers_DNN, evm_DNN, MSE_DNN] = BER_test_maMIMO_LTF(strcat("packets/SNRanalysis/maMIMO_",num2str(nPkts),"_8dB___1Usr_BS32_SNR",num2str(s),".mat"),nPkts,1.0,strcat("/home/mauro/Research/CSI_estimation/checkout_maMIMO_allBS/BS32_SNR",num2str(s),"/test_csi_predictions_real.mat"),strcat("/home/mauro/Research/CSI_estimation/checkout_maMIMO_allBS/BS32_SNR",num2str(s),"/test_csi_predictions_imag.mat"),false,false,s+10);
@@ -48,8 +37,8 @@ for s=snr
     %[metrics] = BER_test_maMIMO_LTF(strcat("packets/SNRanalysis/maMIMO_",num2str(nPkts),"___1Usr_BS32_SNR",num2str(s),".mat"),nPkts,1.0,strcat("/home/mauro/Research/maMIMO_deepCSIEst/CSI_estimation/checkout_maMIMO_allBS/test_denoiseBeta/BS32_SNR",num2str(s),"/test_csi_predictions_real.mat"),strcat("/home/mauro/Research/maMIMO_deepCSIEst/CSI_estimation/checkout_maMIMO_allBS/test_denoiseBeta/BS32_SNR",num2str(s),"/test_csi_predictions_imag.mat"),true,true,s);
     %metrics = load(strcat("/home/mauro/Research/maMIMO_deepCSIEst/CSI_estimation/checkout_maMIMO_allBS/test_denoiseBeta/BS32_SNR",num2str(s),"/metrics2.mat"));
     
-    %[metrics] = BER_test_maMIMO_LTF(strcat("packets/SNRanalysis/maMIMO_",num2str(nPkts),"___1Usr_BS32_SNR",num2str(s),".mat"), nPkts, 1.0, strcat(testData_path,"BS32_SNR",num2str(s),"/test_csi_predictions_real.mat"), strcat(testData_path,"BS32_SNR",num2str(s),"/test_csi_predictions_imag.mat"),false,true,s);
-    metrics = load(strcat(testData_path,"BS32_SNR",num2str(s),"/metrics4.mat"));
+    [metrics] = BER_test_maMIMO_LTF(strcat(inputData_path,"/maMIMO_",num2str(nPkts),"___1UsrTest_BS",num2str(Nt),"_SNR",num2str(s),".mat"), nPkts, 1.0, strcat(testData_path,"/BS",num2str(Nt),"_SNR",num2str(s),"/test_csi_predictions_real.mat"), strcat(testData_path,"/BS",num2str(Nt),"_SNR",num2str(s),"/test_csi_predictions_imag.mat"),false,true,s);
+    % metrics = load(strcat(testData_path,"BS32_SNR",num2str(s),"/metrics4.mat"));
     
     c = c + 1;
     bers_LS_SNR(c) = mean(metrics.bers_LS);

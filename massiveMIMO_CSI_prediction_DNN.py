@@ -75,9 +75,9 @@ def userInput():
 
 def insertBatch(generator, b, bs, testX_out, testy_out):
     X, y, rms_fact = generator[b]
-    if generator.get_method() != 'matlab_maMimo':
+    if generator.get_datasource() != 'matlab_maMimo':
         X = [X]
-    testX_out[b * bs:(b + 1) * bs] = X[0]
+    testX_out[b * bs:(b + 1) * bs] = np.squeeze(X[0])
     testy_out[b * bs:(b + 1) * bs] = y
 
 maxproc = mp.cpu_count()
@@ -349,7 +349,7 @@ for d in dims:
 
             X, y, rms_fact = valid_generator[d][0]
 
-            if valid_generator[d].get_method() != 'matlab_maMimo':
+            if valid_generator[d].get_datasource() != 'matlab_maMimo':
                 X = [X]
 
             testX_out = np.empty((bs*len(valid_generator[d]), X[0].shape[1]))

@@ -650,7 +650,7 @@ for p=1:numPackets
 end
 
 [filepath,~,~] = fileparts(real_csi_pred);
-save(strcat(filepath,'/metrics4.mat'), 'bers_LS', 'EVM_rms_LS', 'MSE_LS','bers_MMSE', 'EVM_rms_MMSE', 'MSE_MMSE', 'bers_DNN', 'EVM_rms_DNN', 'MSE_DNN', 'bers_perfect','EVM_rms_perfect', 'dtSNR_LS','dtSNR_MMSE','dtSNR_DNN','dtSNR_perfect', '-v7.3');
+save(strcat(filepath,'/metrics.mat'), 'bers_LS', 'EVM_rms_LS', 'MSE_LS','bers_MMSE', 'EVM_rms_MMSE', 'MSE_MMSE', 'bers_DNN', 'EVM_rms_DNN', 'MSE_DNN', 'bers_perfect','EVM_rms_perfect', 'dtSNR_LS','dtSNR_MMSE','dtSNR_DNN','dtSNR_perfect', '-v7.3');
 metrics.bers_LS = bers_LS;
 metrics.EVM_rms_LS = EVM_rms_LS;
 metrics.MSE_LS = MSE_LS;
