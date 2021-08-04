@@ -46,7 +46,7 @@ SNRLev="-25 -20 -15 -10 -5 0 5 10"  # SNR levels considered
 ```
 Is it possible to define different SNR levels to be evaluated, number of transmitter and receiver antennas, number of training and test samples. Note that increasing the values of simulation parameters will requires more resources.
 
-### Run the bash script
+### Run the whole simualation
 Run the script [full_pipeline_maMIMO_DNNEst.sh](full_pipeline_maMIMO_DNNEst.sh) to:
 - generate the Training and Testing datasets through Matlab
 - train the DNN models for channel estimation
@@ -57,6 +57,7 @@ To run the script, type the following in your terminal from the project root dir
 ```
 bash full_pipeline_maMIMO_DNNEst.sh
 ```
+If you have already downloaded the [dataset](https://genesys-lab.org/CS-5g-beyond), you can skip the data generation portion and directly train the DNN models.
 
 ## Contacts
 Please reach out to *belgiovine.m [AT] northeastern.edu* for any question. 
