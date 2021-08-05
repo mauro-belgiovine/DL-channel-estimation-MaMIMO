@@ -24,7 +24,7 @@ Software requirements:
 - Python 3.7
 - TensorFlow (2.3)
 - Matlab (2020b)
-- Matlab Phased Antenna Array Toolbox and the following [Hybrid Beamforming Example](https://www.mathworks.com/help/phased/ug/massive-mimo-hybrid-beamforming.html) installed on your machine
+- Matlab Phased Antenna Array Toolbox and [Hybrid Beamforming Example](https://www.mathworks.com/help/phased/ug/massive-mimo-hybrid-beamforming.html) installed on your machine
 ### Configure environment
 First configure simulation parameters in [setenv.sh](setenv.sh). Here is an example of a simulation configuration:
 ```
