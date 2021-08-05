@@ -43,14 +43,15 @@ do
   $PY massiveMIMO_CSI_prediction_DNN.py --test -x $PYDATASET_DIR/SNRanalysis/testDataset${TEST_Npkt}_1Usr_BS${Nt}_SNR$s.b --nn 1024 1024 -d $MODEL_DIR/test_results/BS${Nt}_SNR$s --modeldir $MODEL_DIR --useGPU 0 --useBN --datasource matlab_maMimo --valSameTrain
 done
 
-# generate the output metrics for testing the model performance
+cd $MAT_CODEDIR
+# 5) generate the output metrics for testing the model performance
 for s in $SNRLev
 do
     screen -dmS "mtestMetricsGen_SNR$s" $MATLAB -nodesktop -nosplash -r "addpath('$MMIMO_BF_EX_DIR'); BER_test_maMIMO_LTF('packets/SNRanalysis/maMIMO_${TEST_Npkt}___1UsrTest_BS${Nt}_SNR${s}.mat', ${TEST_Npkt}, 1.0, '../../$MODEL_DIR/test_results/BS${Nt}_SNR${s}/test_csi_predictions_real.mat', '../../$MODEL_DIR/test_results/BS${Nt}_SNR${s}/test_csi_predictions_imag.mat',false,true,$s); exit;"
 done
 
-#5) produce output plots
-cd $MAT_CODEDIR
+# 6) produce output plots
 $MATLAB -nodesktop -nosplash -r "addpath('$MMIMO_BF_EX_DIR'); snr_loop_testing('packets/SNRanalysis','../../$MODEL_DIR/test_results', $TEST_Npkt, [$SNRLev], $Nt); exit;"
+
 cd ../../
 

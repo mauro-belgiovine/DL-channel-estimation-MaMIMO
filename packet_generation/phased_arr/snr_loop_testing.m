@@ -63,71 +63,49 @@ for s=snr
     bfGain_DNN_SNR(c) = mean(metrics.dtSNR_DNN);
 end
 
-figure;
-%f = figure('visible','off');
+
+f = figure('visible','off');
 semilogy(snr,bers_LS_SNR,'-o',snr,bers_MMSE_SNR,'-x',snr,bers_DNN_SNR,'-*');
 xlabel('SNR (dB)');
 ylabel('Bit error rate (BER)');
 grid on;
-saveas(f,strcat(testData_path,'BER'),'fig');
+legend('LS','MMSE','Proposed');
+saveas(f,strcat(testData_path,'BER'),'png');
 
-%figure;
 f = figure('visible','off');
 hold on;
+grid on;
 plot(snr,evm_LS_SNR,'-o');
 plot(snr,evm_MMSE_SNR,'-x');
 plot(snr,evm_DNN_SNR,'-*');
 xlabel('SNR (dB)');
 ylabel('EVM RMS (%)');
 hold off;
-saveas(f,strcat(testData_path,'EVM'),'fig');
+legend('LS','MMSE','Proposed');
+saveas(f,strcat(testData_path,'EVM'),'png');
 
-%figure;
+
 f = figure('visible','off');
 semilogy(snr,MSE_LS_SNR,'-o',snr,MSE_MMSE_SNR,'-x',snr,MSE_DNN_SNR,'-*');
+grid on;
 xlabel('SNR (dB)');
 ylabel('MSE');
-saveas(f,strcat(testData_path,'MSE'),'fig');
-
-% figure;
-% %f = figure('visible','off)');
-% hold on;
-% plot(snr,pow2db(MSE_LS_SNR),'-o');
-% plot(snr,pow2db(MSE_MMSE_SNR),'-x');
-% plot(snr,pow2db(MSE_DNN_SNR),'-*');
-% xlabel('SNR (dB)');
-% ylabel('MSE');
-% saveas(f,strcat(testData_path,'MSE'),'fig');
+legend('LS','MMSE','Proposed');
+saveas(f,strcat(testData_path,'MSE'),'png');
 
 
-%figure;
-f = figure('visible','off)');
+f = figure('visible','off');
 hold on;
 plot(snr,bfGain_LS_SNR,'-o');
 plot(snr,bfGain_MMSE_SNR,'-x');
 plot(snr,bfGain_DNN_SNR,'-*');
+grid on;
 xlabel('SNR (dB)');
 ylabel('Beamforming gain (dB)');
 hold off;
-saveas(f,strcat(testData_path,'BeamformGain'),'fig');
+legend('LS','MMSE','Proposed');
+saveas(f,strcat(testData_path,'BeamformGain'),'png');
 
-
-
-
-% pkt_snr = cell(size(snr,1),1);
-% c = 0;
-% 
-% figure;
-% hold on;
-% for s=snr
-%     load(strcat("packets/SNRanalysis/maMIMO_",num2str(nPkts),"_8dB___1Usr_BS32_SNR_sameseed",num2str(s),".mat"));
-%     c = c + 1;
-%     pkt_snr{c,1} = usr_data{1,1};
-%     if mod(c,2) == 1
-%         plot(real(pkt_snr{c,1}(1,:,1)));
-%     end
-% end
-% hold off;
 
 end
 
