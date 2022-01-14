@@ -7,6 +7,9 @@ MODEL_DIR=magazine_review/BS32_denoise_3k_SNR120
 PYDATASET_DIR=datasets_maMIMO
 MMIMO_BF_EX_DIR=~/Documents/MATLAB/Examples/R2020a/phased_comm/MassiveMIMOHybridBeamformingExample
 
+# flag to generate or not data
+IS_GEN_DATA=0
+
 # simulation parameters
 Nt=32
 Nr=4

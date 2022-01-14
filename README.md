@@ -37,6 +37,9 @@ MODEL_DIR=magazine_review/BS32_denoise_3k_SNR120
 PYDATASET_DIR=datasets_maMIMO
 MMIMO_BF_EX_DIR=~/Documents/MATLAB/Examples/R2020a/phased_comm/MassiveMIMOHybridBeamformingExample
 
+# flag to generate or not data
+IS_GEN_DATA=0
+
 # simulation parameters
 Nt=32
 Nr=4
@@ -57,7 +60,15 @@ To run the script, type the following in your terminal from the project root dir
 ```
 bash full_pipeline_maMIMO_DNNEst.sh
 ```
-If you have already downloaded the [dataset](https://genesys-lab.org/CS-5g-beyond), you can skip the data generation portion and directly train the DNN models.
+If you have already downloaded the [dataset](https://genesys-lab.org/CS-5g-beyond), you can skip the data generation portion and directly train the DNN models. The provided `setenv.sh` has a specific flag for this purpose:
+```shell script
+...
+# flag to generate or not data
+IS_GEN_DATA=0
+...
+```
+In case you want to re-generate the data or generate a new dataset with different parameters, you can set this flag to `1`. Also, make sure that the `PYDATASET_DIR` is pointing to the folder where the dataset has been downloaded.
+
 
 ## Contacts
 Please reach out to belgiovine.m@northeastern.edu for any question. 

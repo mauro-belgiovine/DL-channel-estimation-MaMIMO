@@ -5,30 +5,33 @@ source setenv.sh
 
 mkdir -p $MAT_CODEDIR/packets/SNRanalysis
 
-# 1) generate train/test matlab files
-#test
-echo "Starting test set generation in bg.."
-cd $MAT_CODEDIR
-for s in $SNRLev
-do
-    screen -dmS "matGen_SNR$s" $MATLAB -nodesktop -nosplash -r "addpath('$MMIMO_BF_EX_DIR'); generate_maMIMO_LTF(strcat('1UsrTest_BS${Nt}_SNR',num2str($s)),$TEST_Npkt,$Nt,$Nr,$s,true,true,false,[],false); exit;"
-done
-# while we generate test data in background (NOTE, they should have less Npkt than training set), generate training dataset 
-#train
-echo "Generating training set.."
-$MATLAB -nodesktop -nosplash -r "addpath('$MMIMO_BF_EX_DIR'); generate_maMIMO_LTF(strcat('1UsrTrain_BS${Nt}_SNR',num2str(120)),$TRAIN_Npkt,$Nt,$Nr,$s,true,true,false,[],false); exit;"
-cd ../../
+if [ $IS_GEN_DATA -eq 1 ]
+then
+  # 1) generate train/test matlab files
+  #test
+  echo "Starting test set generation in bg.."
+  cd $MAT_CODEDIR
+  for s in $SNRLev
+  do
+      screen -dmS "matGen_SNR$s" $MATLAB -nodesktop -nosplash -r "addpath('$MMIMO_BF_EX_DIR'); generate_maMIMO_LTF(strcat('1UsrTest_BS${Nt}_SNR',num2str($s)),$TEST_Npkt,$Nt,$Nr,$s,true,true,false,[],false); exit;"
+  done
+  # while we generate test data in background (NOTE, they should have less Npkt than training set), generate training dataset
+  #train
+  echo "Generating training set.."
+  $MATLAB -nodesktop -nosplash -r "addpath('$MMIMO_BF_EX_DIR'); generate_maMIMO_LTF(strcat('1UsrTrain_BS${Nt}_SNR',num2str(120)),$TRAIN_Npkt,$Nt,$Nr,$s,true,true,false,[],false); exit;"
+  cd ../../
 
-mkdir -p $PYDATASET_DIR/SNRanalysis
-# 2) generate train and test datasets for python scripts
-echo "Generating Python ready dataset files form matlab format.."
-# test data
-for s in $SNRLev
-do
-    screen -dmS "pyDataConvert_SNR$s" $PY create_massiveMIMO_CSIest_dnn_dataset.py -x $MAT_CODEDIR/packets/SNRanalysis/maMIMO_${TEST_Npkt}___1UsrTest_BS${Nt}_SNR${s}.mat -o $PYDATASET_DIR/SNRanalysis/testDataset${TEST_Npkt}_1Usr_BS${Nt}_SNR${s}.b
-done
-# train data
-$PY create_massiveMIMO_CSIest_dnn_dataset.py -x $MAT_CODEDIR/packets/SNRanalysis/maMIMO_${TRAIN_Npkt}___1UsrTrain_BS${Nt}_SNR120.mat -o $PYDATASET_DIR/SNRanalysis/dataset${TRAIN_Npkt}_1Usr_BS${Nt}_SNR120_NOISELESS.b
+  mkdir -p $PYDATASET_DIR/SNRanalysis
+  # 2) generate train and test datasets for python scripts
+  echo "Generating Python ready dataset files form matlab format.."
+  # test data
+  for s in $SNRLev
+  do
+      screen -dmS "pyDataConvert_SNR$s" $PY create_massiveMIMO_CSIest_dnn_dataset.py -x $MAT_CODEDIR/packets/SNRanalysis/maMIMO_${TEST_Npkt}___1UsrTest_BS${Nt}_SNR${s}.mat -o $PYDATASET_DIR/SNRanalysis/testDataset${TEST_Npkt}_1Usr_BS${Nt}_SNR${s}.b
+  done
+  # train data
+  $PY create_massiveMIMO_CSIest_dnn_dataset.py -x $MAT_CODEDIR/packets/SNRanalysis/maMIMO_${TRAIN_Npkt}___1UsrTrain_BS${Nt}_SNR120.mat -o $PYDATASET_DIR/SNRanalysis/dataset${TRAIN_Npkt}_1Usr_BS${Nt}_SNR120_NOISELESS.b
+fi
 
 mkdir -p $MODEL_DIR/BS${Nt}_denoise_${TRAIN_Npkt}_SNR120
 # 3) train
