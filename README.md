@@ -19,12 +19,12 @@ The Training and Testing dataset to reproduce the paper results can be downloade
 
 ## How to run (Ubuntu 18.04)
 ### Dependencies
-Data generation requires a lot of resources, so a machine with multicore and lots of RAM is recommended. Also, for TensorFlow, a GPU is recommended.
+Data generation requires a lot of resources, a machine with multicore and lots of RAM is recommended. Also, for TensorFlow, a GPU is recommended.
 Software requirements:
 - Python 3.7
 - TensorFlow (2.3)
 - Matlab (2020b)
-- Matlab Phased Antenna Array Toolbox and the following [Hybrid Beamforming Example](https://www.mathworks.com/help/phased/ug/massive-mimo-hybrid-beamforming.html) installed on your machine
+- Matlab Phased Antenna Array Toolbox and [Hybrid Beamforming Example](https://www.mathworks.com/help/phased/ug/massive-mimo-hybrid-beamforming.html) installed on your machine
 ### Configure environment
 First configure simulation parameters in [setenv.sh](setenv.sh). Here is an example of a simulation configuration:
 ```
@@ -49,7 +49,7 @@ SNRLev="-25 -20 -15 -10 -5 0 5 10"  # SNR levels considered
 ```
 Is it possible to define different SNR levels to be evaluated, number of transmitter and receiver antennas, number of training and test samples. Note that increasing the values of simulation parameters will requires more resources.
 
-### Run the whole simualation
+### Run the whole simulation
 Run the script [full_pipeline_maMIMO_DNNEst.sh](full_pipeline_maMIMO_DNNEst.sh) to:
 - generate the Training and Testing datasets through Matlab
 - train the DNN models for channel estimation
