@@ -18,7 +18,7 @@ then
   # while we generate test data in background (NOTE, they should have less Npkt than training set), generate training dataset
   #train
   echo "Generating training set.."
-  $MATLAB -nodesktop -nosplash -r "addpath('$MMIMO_BF_EX_DIR'); generate_maMIMO_LTF(strcat('1UsrTrain_BS${Nt}_SNR',num2str(120)),$TRAIN_Npkt,$Nt,$Nr,$s,true,true,false,[],false); exit;"
+  $MATLAB -nodesktop -nosplash -r "addpath('$MMIMO_BF_EX_DIR'); generate_maMIMO_LTF(strcat('1UsrTrain_BS${Nt}_SNR',num2str(120)),$TRAIN_Npkt,$Nt,$Nr,120,true,true,false,[],false); exit;"
   cd ../../
 
   mkdir -p $PYDATASET_DIR/SNRanalysis
