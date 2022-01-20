@@ -71,4 +71,4 @@ In case you want to re-generate the data or generate a new dataset with differen
 
 
 ## Contacts
-Please reach out to belgiovine.m@northeastern.edu for any question. 
+Please reach out to belgiovine.m@northeastern.edu for any question. Disclaimer: this code was part of a larger code base that involved multiple experiments. In the future it will be polished to trim the unnecessary parts of code.
