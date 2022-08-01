@@ -18,6 +18,9 @@ Please cite our work if using this code for your experiments:
 The Training and Testing dataset to reproduce the paper results can be downloaded on [Genesys Website](https://genesys-lab.org/CS-5g-beyond). The web page also offer additional insights on the dataset created and the obtained performance.
 
 ## How to run (Ubuntu 18.04)
+### Video tutorial
+A walkthrough video explaining the dataset generation and how to run the code is available [here](https://www.youtube.com/watch?v=HLg7b7l5nW8).
+
 ### Dependencies
 Data generation requires a lot of resources, a machine with multicore and lots of RAM is recommended. Also, for TensorFlow, a GPU is recommended.
 Software requirements:
