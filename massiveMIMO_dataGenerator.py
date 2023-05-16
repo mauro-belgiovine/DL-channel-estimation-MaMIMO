@@ -316,73 +316,73 @@ class DataGenerator(Sequence):
                 X = [Xsig, Xp]
 
                 """
-            if self.method == 'default':
-                # Initialization
-                if self.model == 'FC':
-                    X = np.empty((cur_batch_size, int(self.prm['lenLTF']/self.fraction)+self.prm['nTX'],))                                     # retrieve LTF HALF! int(self.prm['lenLTF']/2)
-                    #X = np.empty((cur_batch_size, self.prm['lenLTF'],))                            # without append P
-                elif self.model =='CONV1D':
-                    X = np.empty((cur_batch_size, self.prm['lenLTF'] + self.prm['nTX'],1))     # CNN input
-
-                y = np.empty((cur_batch_size, self.prm['nSubCarr']))
-
-                # Generate data
-                for i,sampleIx in enumerate(list_IDs_temp):
-                    # Store sample
+                if self.method == 'default':
+                    # Initialization
                     if self.model == 'FC':
-                        X[i] = np.append(self.dataset['LTF'][self.dataset['X'][sampleIx, 0]][self.d][0:int(self.prm['lenLTF']/self.fraction)],   # retrieve LTF HALF! int(self.prm['lenLTF']/2)
-                                           self.dataset['P'][:, self.dataset['X'][sampleIx, 1]])  # append the preamble sequence
-                        #X[i] = self.dataset['LTF'][self.dataset['X'][sampleIx, 0]][self.d] # without append P ---> doesn't work, as expected :)
-
+                        X = np.empty((cur_batch_size, int(self.prm['lenLTF']/self.fraction)+self.prm['nTX'],))                                     # retrieve LTF HALF! int(self.prm['lenLTF']/2)
+                        #X = np.empty((cur_batch_size, self.prm['lenLTF'],))                            # without append P
                     elif self.model =='CONV1D':
-
-                        #input_nn = np.append(self.dataset['LTF'][self.dataset['X'][sampleIx, 0]][self.d],
-                        #          self.dataset['P'][:, self.dataset['X'][sampleIx, 1]])
-
-                        input_nn = self.dataset['LTF'][self.dataset['X'][sampleIx, 0]][self.d]
-
-                        X[i] = np.reshape(input_nn,                                 # reshape for CNN input
-                                         (self.prm['lenLTF'] + self.prm['nTX'],1))
-
-                    # Store class
-                    y[i] = self.dataset['y'][self.d][sampleIx,:]
-            elif self.method == 'default_SNR':
-
-                # Initialization
-                if self.model == 'FC':
-                    Xsig = np.empty((cur_batch_size, int(self.prm['lenLTF'] / self.fraction),1))  # retrieve LTF HALF! int(self.prm['lenLTF']/2)
-                    Xp = np.empty((cur_batch_size, self.prm['nTX'],))
-                    # X = np.empty((cur_batch_size, self.prm['lenLTF'],))                            # without append P
-                elif self.model == 'CONV1D':
-                    X = np.empty((cur_batch_size, self.prm['lenLTF'] + self.prm['nTX'], 1))  # CNN input
-
-                y = np.empty((cur_batch_size, self.prm['nSubCarr']))
-
-                # Generate data
-                for i, sampleIx in enumerate(list_IDs_temp):
-                    # Store sample
+                        X = np.empty((cur_batch_size, self.prm['lenLTF'] + self.prm['nTX'],1))     # CNN input
+    
+                    y = np.empty((cur_batch_size, self.prm['nSubCarr']))
+    
+                    # Generate data
+                    for i,sampleIx in enumerate(list_IDs_temp):
+                        # Store sample
+                        if self.model == 'FC':
+                            X[i] = np.append(self.dataset['LTF'][self.dataset['X'][sampleIx, 0]][self.d][0:int(self.prm['lenLTF']/self.fraction)],   # retrieve LTF HALF! int(self.prm['lenLTF']/2)
+                                               self.dataset['P'][:, self.dataset['X'][sampleIx, 1]])  # append the preamble sequence
+                            #X[i] = self.dataset['LTF'][self.dataset['X'][sampleIx, 0]][self.d] # without append P ---> doesn't work, as expected :)
+    
+                        elif self.model =='CONV1D':
+    
+                            #input_nn = np.append(self.dataset['LTF'][self.dataset['X'][sampleIx, 0]][self.d],
+                            #          self.dataset['P'][:, self.dataset['X'][sampleIx, 1]])
+    
+                            input_nn = self.dataset['LTF'][self.dataset['X'][sampleIx, 0]][self.d]
+    
+                            X[i] = np.reshape(input_nn,                                 # reshape for CNN input
+                                             (self.prm['lenLTF'] + self.prm['nTX'],1))
+    
+                        # Store class
+                        y[i] = self.dataset['y'][self.d][sampleIx,:]
+                elif self.method == 'default_SNR':
+    
+                    # Initialization
                     if self.model == 'FC':
-                        Xsig[i] = self.dataset['LTF'][self.dataset['X'][sampleIx, 0]][self.d][
-                                         0:int(self.prm['lenLTF'] / self.fraction)][:, np.newaxis]
-                        Xp[i] = self.dataset['P'][:,self.dataset['X'][sampleIx, 1]]
-                                         # retrieve LTF HALF! int(self.prm['lenLTF']/2)
-                                           # append the preamble sequence
-                        # X[i] = self.dataset['LTF'][self.dataset['X'][sampleIx, 0]][self.d] # without append P ---> doesn't work, as expected :)
-
+                        Xsig = np.empty((cur_batch_size, int(self.prm['lenLTF'] / self.fraction),1))  # retrieve LTF HALF! int(self.prm['lenLTF']/2)
+                        Xp = np.empty((cur_batch_size, self.prm['nTX'],))
+                        # X = np.empty((cur_batch_size, self.prm['lenLTF'],))                            # without append P
                     elif self.model == 'CONV1D':
-
-                        input_nn = np.append(self.dataset['LTF'][self.dataset['X'][sampleIx, 0]][self.d],
-                                  self.dataset['P'][:, self.dataset['X'][sampleIx, 1]])
-
-                        #input_nn = self.dataset['LTF'][self.dataset['X'][sampleIx, 0]][self.d]
-
-                        X[i] = np.reshape(input_nn,  # reshape for CNN input
-                                          (self.prm['lenLTF'] + self.prm['nTX'], 1))
-
-                    # Store class
-                    y[i] = self.dataset['y'][self.d][sampleIx, :]
-
-                X =  [Xsig, Xp ]
+                        X = np.empty((cur_batch_size, self.prm['lenLTF'] + self.prm['nTX'], 1))  # CNN input
+    
+                    y = np.empty((cur_batch_size, self.prm['nSubCarr']))
+    
+                    # Generate data
+                    for i, sampleIx in enumerate(list_IDs_temp):
+                        # Store sample
+                        if self.model == 'FC':
+                            Xsig[i] = self.dataset['LTF'][self.dataset['X'][sampleIx, 0]][self.d][
+                                             0:int(self.prm['lenLTF'] / self.fraction)][:, np.newaxis]
+                            Xp[i] = self.dataset['P'][:,self.dataset['X'][sampleIx, 1]]
+                                             # retrieve LTF HALF! int(self.prm['lenLTF']/2)
+                                               # append the preamble sequence
+                            # X[i] = self.dataset['LTF'][self.dataset['X'][sampleIx, 0]][self.d] # without append P ---> doesn't work, as expected :)
+    
+                        elif self.model == 'CONV1D':
+    
+                            input_nn = np.append(self.dataset['LTF'][self.dataset['X'][sampleIx, 0]][self.d],
+                                      self.dataset['P'][:, self.dataset['X'][sampleIx, 1]])
+    
+                            #input_nn = self.dataset['LTF'][self.dataset['X'][sampleIx, 0]][self.d]
+    
+                            X[i] = np.reshape(input_nn,  # reshape for CNN input
+                                              (self.prm['lenLTF'] + self.prm['nTX'], 1))
+    
+                        # Store class
+                        y[i] = self.dataset['y'][self.d][sampleIx, :]
+    
+                    X =  [Xsig, Xp ]
                 """
 
                 """

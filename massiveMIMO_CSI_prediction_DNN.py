@@ -357,9 +357,10 @@ for d in dims:
 
 
 
-            func_args = [[valid_generator[d], b, bs, testX_out, testy_out] for b in range(len(valid_generator[d]))]
-            out_data = pool.starmap(insertBatch, func_args)
-
+            #func_args = [[valid_generator[d], b, bs, testX_out, testy_out] for b in range(len(valid_generator[d]))]
+            #out_data = pool.starmap(insertBatch, func_args)
+            for b in range(len(valid_generator[d])):
+                insertBatch(valid_generator[d], b, bs, testX_out, testy_out)
             """
             testX_out = None
             testy_out = None
